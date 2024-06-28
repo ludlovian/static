@@ -50,6 +50,11 @@ async function sendFile (path, req, res) {
     res.end()
     return true
   }
+  if (stats.size < 256 * 1024) {
+    const data = await cache.readFile(stats.path)
+    res.end(data)
+    return true
+  }
 
   await pipeline(cache.readFileStream(stats.path), res)
   return true
