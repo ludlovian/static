@@ -2,7 +2,7 @@ import { createServer } from 'node:http'
 
 import staticFiles from '../src/index.mjs'
 
-const middleware = staticFiles.serveFiles('./src')
+const middleware = staticFiles.serveFiles('.')
 
 const server = createServer()
 server.on('listening', () => {

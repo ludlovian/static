@@ -1,4 +1,5 @@
 import { pipeline } from 'node:stream/promises'
+import { createReadStream } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { lookup } from 'mrmime'
 import FileCache from '@ludlovian/filecache'
@@ -23,7 +24,7 @@ async function sendFile (path, req, res) {
     'Content-Length': stats.size,
     'Content-Type': ctype,
     'Last-Modified': new Date(stats.mtime).toUTCString(),
-    ETag: `W/"${stats.size}-${stats.mtime}"`
+    ETag: `W/"${stats.size}-${~~stats.mtime}"`
   }
 
   for (const [ext, enc] of ENCODINGS) {
@@ -50,13 +51,14 @@ async function sendFile (path, req, res) {
     res.end()
     return true
   }
-  if (stats.size < 256 * 1024) {
-    const data = await cache.readFile(stats.path)
+
+  const data = await cache.readFile(stats.path)
+  if (data !== null) {
     res.end(data)
     return true
   }
 
-  await pipeline(cache.readFileStream(stats.path), res)
+  await pipeline(createReadStream(stats.path), res)
   return true
 }
 
@@ -67,7 +69,7 @@ async function findEncodedFile (path, acceptEncodings) {
   }
   for (const path of paths) {
     const stats = await cache.findFile(path)
-    if (stats) return stats
+    if (!stats.missing) return stats
   }
 }
 
