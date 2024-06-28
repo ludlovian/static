@@ -9,7 +9,7 @@ The default export.
 
 Sends a file, returning a promise (true/false) saying whether the file was found and sent.
 
-### static.serveFiles(opts) => middlewareFunction
+### static.serveFiles(root, opts) => middlewareFunction
 
 Create a middleware function which servers static files
 options are:
