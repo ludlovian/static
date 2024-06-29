@@ -10,7 +10,7 @@ importers:
     dependencies:
       '@ludlovian/configure':
         specifier: github:ludlovian/configure
-        version: https://codeload.github.com/ludlovian/configure/tar.gz/3a8bb028d77cfbdb64d22c47a316da8509dad898
+        version: https://codeload.github.com/ludlovian/configure/tar.gz/0694d086d5d82ea4e5525451f892e0892b217914
       '@ludlovian/filecache':
         specifier: github:ludlovian/filecache
         version: https://codeload.github.com/ludlovian/filecache/tar.gz/f9809c2c3a0bd4387932678bd8092f4521cbc64b(better-sqlite3@11.1.1)
@@ -28,9 +28,9 @@ packages:
     resolution: {tarball: https://codeload.github.com/ludlovian/camel/tar.gz/8389f121d271c7930e99ad82b0dc5dbe16dfcb03}
     version: 0.1.0
 
-  '@ludlovian/configure@https://codeload.github.com/ludlovian/configure/tar.gz/3a8bb028d77cfbdb64d22c47a316da8509dad898':
-    resolution: {tarball: https://codeload.github.com/ludlovian/configure/tar.gz/3a8bb028d77cfbdb64d22c47a316da8509dad898}
-    version: 0.1.2
+  '@ludlovian/configure@https://codeload.github.com/ludlovian/configure/tar.gz/0694d086d5d82ea4e5525451f892e0892b217914':
+    resolution: {tarball: https://codeload.github.com/ludlovian/configure/tar.gz/0694d086d5d82ea4e5525451f892e0892b217914}
+    version: 0.2.0
 
   '@ludlovian/filecache@https://codeload.github.com/ludlovian/filecache/tar.gz/f9809c2c3a0bd4387932678bd8092f4521cbc64b':
     resolution: {tarball: https://codeload.github.com/ludlovian/filecache/tar.gz/f9809c2c3a0bd4387932678bd8092f4521cbc64b}
@@ -182,7 +182,7 @@ snapshots:
 
   '@ludlovian/camel@https://codeload.github.com/ludlovian/camel/tar.gz/8389f121d271c7930e99ad82b0dc5dbe16dfcb03': {}
 
-  '@ludlovian/configure@https://codeload.github.com/ludlovian/configure/tar.gz/3a8bb028d77cfbdb64d22c47a316da8509dad898':
+  '@ludlovian/configure@https://codeload.github.com/ludlovian/configure/tar.gz/0694d086d5d82ea4e5525451f892e0892b217914':
     dependencies:
       '@ludlovian/camel': https://codeload.github.com/ludlovian/camel/tar.gz/8389f121d271c7930e99ad82b0dc5dbe16dfcb03
       '@ludlovian/guess': https://codeload.github.com/ludlovian/guess/tar.gz/98ce9a84b91c571001c7ce164fad7ab9ce1946a4
