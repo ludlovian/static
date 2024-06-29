@@ -113,7 +113,7 @@ function serveFiles (root, opts = {}) {
   async function handler (req, res, next) {
     const path = new URL(`http://localhost${req.url}`).pathname
     if (filter && filter(path)) return next()
-    const paths = [absPathToRelFile, single].filter(Boolean)
+    const paths = [absPathToRelFile(path), single].filter(Boolean)
 
     for (let path of paths) {
       path = join(root, path)
