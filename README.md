@@ -14,8 +14,8 @@ Sends a file, returning a promise (true/false) saying whether the file was found
 Create a middleware function which servers static files
 options are:
 - `single` - if set, then any unknown paths are served by this file (or `/index.html` if it simply `true`)
-- `except` - an optional array of path prefixes. If the path matches any of these, we do not try to serve these, but fall through.
+- `filter` - an optional `path => bool` function to filter out paths we do not wish to serve
 
 ### static.cache
 
-The `filecache` object sitting behind this. Can then be used to `.prefetch` known static files.
+The `filecache` object sitting behind this. You can `.reset`, `.findFile` or even `.readFile` to prefetch`

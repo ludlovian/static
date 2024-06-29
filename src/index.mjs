@@ -5,8 +5,23 @@ import { lookup } from 'mrmime'
 import FileCache from '@ludlovian/filecache'
 import config from './config.mjs'
 
+// SQLite based file cache for static files
+//
+
 const cache = new FileCache(config.cacheFile)
+
+// Supported encodings
+//
+// Will use an encoded file if supplied
+//
 const ENCODINGS = [['.gz', 'gzip']]
+
+//
+// sendFile
+//
+// Sends a static file => Promise<Boolean>
+//
+// Returns true/false saying if it managed to find the file
 
 async function sendFile (path, req, res) {
   const reqEnc = req.headers['accept-encoding'] ?? ''
@@ -46,18 +61,21 @@ async function sendFile (path, req, res) {
     return true
   }
 
+  // If it's a HEAD, just send the headers
   res.writeHead(200, headers)
   if (req.method === 'HEAD') {
     res.end()
     return true
   }
 
+  // Try to send the file in one go (if it was small enough to be cached)
   const data = await cache.readFile(stats.path)
   if (data !== null) {
     res.end(data)
     return true
   }
 
+  // else pipe the file from the filesystem
   await pipeline(createReadStream(stats.path), res)
   return true
 }
@@ -73,25 +91,31 @@ async function findEncodedFile (path, acceptEncodings) {
   }
 }
 
+// Create a static-serving middleware
+//
+// root   - the base directory
+// options
+//    - filter  - a path => boolean which tells us which requests to
+//                immediately ignore
+//
+//    - single  - the file to be served for all unknown paths
+//                (or /index.html if set to true)
+
 function serveFiles (root, opts = {}) {
-  let { single, except = [] } = opts
-  if (single) {
-    single = addIndexToPath(single === true ? '/' : single)
-  }
-  except = except.map(stripLeadingSlash)
-  const isException = path => except.some(e => path.startsWith(e))
+  const filter = opts.filter
+  const single =
+    opts.single && absPathToRelFile(opts.single === true ? '/' : opts.single)
 
   root = resolve(root)
 
   return handler
 
   async function handler (req, res, next) {
-    let path = new URL(`http://localhost${req.url}`).pathname
-    path = stripLeadingSlash(addIndexToPath(path))
-    const paths = [path]
-    if (single && !isException(path)) paths.push(single)
+    const path = new URL(`http://localhost${req.url}`).pathname
+    if (filter && filter(path)) return next()
+    const paths = [absPathToRelFile, single].filter(Boolean)
 
-    for (path of paths) {
+    for (let path of paths) {
       path = join(root, path)
       try {
         if (await sendFile(path, req, res)) return
@@ -104,12 +128,14 @@ function serveFiles (root, opts = {}) {
   }
 }
 
-function addIndexToPath (path) {
-  return path.endsWith('/') ? path + 'index.html' : path
-}
-
-function stripLeadingSlash (path) {
-  return path.startsWith('/') ? path.slice(1) : path
+function absPathToRelFile (path) {
+  return (
+    path
+      // add index to directories
+      .replace(/\/$/, '/index.html')
+      // strip leading slash
+      .replace(/^\//, '')
+  )
 }
 
 export default {
