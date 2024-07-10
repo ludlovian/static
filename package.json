@@ -1,6 +1,6 @@
 {
   "name": "@ludlovian/static",
-  "version": "0.2.5",
+  "version": "0.3.0",
   "description": "Database based serve of static files",
   "main": "src/index.mjs",
   "exports": {
