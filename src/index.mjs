@@ -1,5 +1,4 @@
 import { pipeline } from 'node:stream/promises'
-import { createReadStream } from 'node:fs'
 import { join, resolve } from 'node:path'
 import { lookup } from 'mrmime'
 import FileCache from '@ludlovian/filecache'
@@ -39,7 +38,7 @@ async function sendFile (path, req, res) {
     'Content-Length': stats.size,
     'Content-Type': ctype,
     'Last-Modified': new Date(stats.mtime).toUTCString(),
-    ETag: `W/"${stats.size}-${~~stats.mtime}"`
+    ETag: `W/"${stats.size}-${stats.mtime}"`
   }
 
   for (const [ext, enc] of ENCODINGS) {
@@ -68,15 +67,8 @@ async function sendFile (path, req, res) {
     return true
   }
 
-  // Try to send the file in one go (if it was small enough to be cached)
-  const data = await cache.readFile(stats.path)
-  if (data !== null) {
-    res.end(data)
-    return true
-  }
-
-  // else pipe the file from the filesystem
-  await pipeline(createReadStream(stats.path), res)
+  // get a stream of the file and send it
+  await pipeline(cache.streamFile(stats.path), res)
   return true
 }
 

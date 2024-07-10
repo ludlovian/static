@@ -13,7 +13,7 @@ importers:
         version: https://codeload.github.com/ludlovian/configure/tar.gz/8c230fcd47114d3949cc030c47658bb8b2de63b7
       '@ludlovian/filecache':
         specifier: github:ludlovian/filecache
-        version: https://codeload.github.com/ludlovian/filecache/tar.gz/bdf316222a3b896422b2c9f35beac4a98f3d31ef(better-sqlite3@11.1.2)
+        version: https://codeload.github.com/ludlovian/filecache/tar.gz/158c8a2e08f69f385bc2c6ee6f9f50014c537009(better-sqlite3@11.1.2)
       mrmime:
         specifier: ^2.0.0
         version: 2.0.0
@@ -36,15 +36,24 @@ packages:
     resolution: {tarball: https://codeload.github.com/ludlovian/configure/tar.gz/8c230fcd47114d3949cc030c47658bb8b2de63b7}
     version: 0.3.1
 
-  '@ludlovian/filecache@https://codeload.github.com/ludlovian/filecache/tar.gz/bdf316222a3b896422b2c9f35beac4a98f3d31ef':
-    resolution: {tarball: https://codeload.github.com/ludlovian/filecache/tar.gz/bdf316222a3b896422b2c9f35beac4a98f3d31ef}
-    version: 0.5.0
-    peerDependencies:
-      better-sqlite3: ^11.0.0
+  '@ludlovian/filecache@https://codeload.github.com/ludlovian/filecache/tar.gz/158c8a2e08f69f385bc2c6ee6f9f50014c537009':
+    resolution: {tarball: https://codeload.github.com/ludlovian/filecache/tar.gz/158c8a2e08f69f385bc2c6ee6f9f50014c537009}
+    version: 0.7.1
 
   '@ludlovian/guess@https://codeload.github.com/ludlovian/guess/tar.gz/98ce9a84b91c571001c7ce164fad7ab9ce1946a4':
     resolution: {tarball: https://codeload.github.com/ludlovian/guess/tar.gz/98ce9a84b91c571001c7ce164fad7ab9ce1946a4}
     version: 0.1.0
+
+  '@ludlovian/lock@https://codeload.github.com/ludlovian/lock/tar.gz/d1ca32b46e1e59cb8d7736f64a438dabc570555c':
+    resolution: {tarball: https://codeload.github.com/ludlovian/lock/tar.gz/d1ca32b46e1e59cb8d7736f64a438dabc570555c}
+    version: 0.1.0
+
+  '@ludlovian/sqlite@https://codeload.github.com/ludlovian/sqlite/tar.gz/c337f1bafd36e4daed4633d8e217bcc04f2614b0':
+    resolution: {tarball: https://codeload.github.com/ludlovian/sqlite/tar.gz/c337f1bafd36e4daed4633d8e217bcc04f2614b0}
+    version: 0.2.1
+    hasBin: true
+    peerDependencies:
+      better-sqlite3: '>7.0.0'
 
   '@ludlovian/timer@https://codeload.github.com/ludlovian/timer/tar.gz/fa5cf51fba00f2715de2b182d1d546d7a8cbe883':
     resolution: {tarball: https://codeload.github.com/ludlovian/timer/tar.gz/fa5cf51fba00f2715de2b182d1d546d7a8cbe883}
@@ -200,12 +209,22 @@ snapshots:
       '@ludlovian/guess': https://codeload.github.com/ludlovian/guess/tar.gz/98ce9a84b91c571001c7ce164fad7ab9ce1946a4
       '@lukeed/ms': 2.0.2
 
-  '@ludlovian/filecache@https://codeload.github.com/ludlovian/filecache/tar.gz/bdf316222a3b896422b2c9f35beac4a98f3d31ef(better-sqlite3@11.1.2)':
+  '@ludlovian/filecache@https://codeload.github.com/ludlovian/filecache/tar.gz/158c8a2e08f69f385bc2c6ee6f9f50014c537009(better-sqlite3@11.1.2)':
+    dependencies:
+      '@ludlovian/bouncer': https://codeload.github.com/ludlovian/bouncer/tar.gz/72617e7f6e5380acc917f58796e7a230d261d672
+      '@ludlovian/lock': https://codeload.github.com/ludlovian/lock/tar.gz/d1ca32b46e1e59cb8d7736f64a438dabc570555c
+      '@ludlovian/sqlite': https://codeload.github.com/ludlovian/sqlite/tar.gz/c337f1bafd36e4daed4633d8e217bcc04f2614b0(better-sqlite3@11.1.2)
+    transitivePeerDependencies:
+      - better-sqlite3
+
+  '@ludlovian/guess@https://codeload.github.com/ludlovian/guess/tar.gz/98ce9a84b91c571001c7ce164fad7ab9ce1946a4': {}
+
+  '@ludlovian/lock@https://codeload.github.com/ludlovian/lock/tar.gz/d1ca32b46e1e59cb8d7736f64a438dabc570555c': {}
+
+  '@ludlovian/sqlite@https://codeload.github.com/ludlovian/sqlite/tar.gz/c337f1bafd36e4daed4633d8e217bcc04f2614b0(better-sqlite3@11.1.2)':
     dependencies:
       '@ludlovian/bouncer': https://codeload.github.com/ludlovian/bouncer/tar.gz/72617e7f6e5380acc917f58796e7a230d261d672
       better-sqlite3: 11.1.2
-
-  '@ludlovian/guess@https://codeload.github.com/ludlovian/guess/tar.gz/98ce9a84b91c571001c7ce164fad7ab9ce1946a4': {}
 
   '@ludlovian/timer@https://codeload.github.com/ludlovian/timer/tar.gz/fa5cf51fba00f2715de2b182d1d546d7a8cbe883': {}
 

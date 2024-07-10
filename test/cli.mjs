@@ -5,8 +5,12 @@ import staticFiles from '../src/index.mjs'
 const middleware = staticFiles.serveFiles('.')
 
 const server = createServer()
-server.on('listening', () => {
+server.on('listening', async () => {
   console.log(`Listening on ${server.address().port}`)
+  staticFiles.cache.reset()
+  console.log('prefetching...')
+  await staticFiles.cache.prefetch('src')
+  console.log('prefetching...done')
 })
 
 server.on('request', (req, res) => {
